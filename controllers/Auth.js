@@ -1,0 +1,184 @@
+const User = require("../models/User");
+const OTP = require("../models/OTP");
+const otpGenerator = require("otp-generator");
+const Profile = require("../models/Profile");
+const bcrypt = require("bcrypt");
+
+//Send OTP
+exports.sendOTP = async (req, res) => {
+  try {
+    //Fetch email from req body
+    const { email } = req.body;
+
+    // Validate email format using regex
+    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid email format",
+      });
+    }
+
+    //check if user already exist
+    const checkUserPresent = await User.find({ email });
+
+    //If user already exist, then return res
+    if (checkUserPresent) {
+      return res.status(401).json({
+        success: false,
+        message: "User already registered",
+      });
+    }
+
+    //Generate OTP
+    let otp = otpGenerator.generate(6, {
+      upperCaseAlphabets: false,
+      lowerCaseAlphabets: false,
+      specialChars: false,
+    });
+    console.log("OTP generated : ", otp);
+
+    //Ensure OTP is unique
+    let result = await OTP.findOne({ otp: otp });
+
+    while (result) {
+      otp = otpGenerator.generate(6, {
+        upperCaseAlphabets: false,
+        lowerCaseAlphabets: false,
+        specialChars: false,
+      });
+      let result = await OTP.findOne({ otp: otp });
+    }
+
+    const otpPayload = { email, otp };
+
+    //Create an DB entry for OTP
+    const otpBody = await OTP.create(otpPayload);
+    console.log("OTP Body :", otpBody);
+
+    //Return success response
+    return res.status(200).json({
+      success: true,
+      message: "OTP sent successfully",
+      otp,
+    });
+  } catch (err) {
+    console.log("Issue fetching during sending OTP time: ", err);
+    return res.status(400).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+//Signup
+
+exports.signUp = async (req, res) => {
+  try {
+    //Fetch data from request body
+    const {
+      firstName,
+      lastName,
+      email,
+      password,
+      confirmPassword,
+      accountType,
+      contactNumber,
+      otp,
+    } = req.body;
+
+    //Validation
+    if (
+      !firstName ||
+      !lastName ||
+      !email ||
+      !password ||
+      !confirmPassword ||
+      !otp
+    ) {
+      return res.status(403).json({
+        success: false,
+        message: "All fields are required",
+      });
+    }
+
+    //2 Password Match Kra Lo
+    if (password !== confirmPassword) {
+      return res.status(400).json({
+        success: false,
+        message:
+          "Password and Confirmed Password value does not match, Please try again",
+      });
+    }
+
+    //Check user already registered
+    const existingUser = await User.findOne({ email });
+
+    if (existingUser) {
+      return res.status(400).json({
+        success: false,
+        message: "Already registered user, you can login the page",
+      });
+    }
+
+    //Find most recent OTP stored for the user
+    const recentOtp = await OTP.find({ email })
+      .sort({ createdAt: -1 })
+      .limit(1);
+    console.log(recentOtp);
+
+    //Validate OTP
+    if (recentOtp.length == 0) {
+      //OTP not found
+      return res.status(400).json({
+        success: false,
+        message: "OTP Not found",
+      });
+    } else if (otp !== recentOtp.otp) {
+      //OTP Not Match
+      return res.status(400).json({
+        success: false,
+        message: "OTP Not Match or Invalid OTP",
+      });
+    }
+
+    //Password Hash Kar Lo
+    const hashedPassword = await bcrypt.hash(10, password);
+
+    //DB me entry create Kar Lo
+    const profileDetails = await Profile.create({
+      gender: null,
+      dateOfBirth: null,
+      about: null,
+      contactNumber: null,
+    });
+
+    const user = await User.create({
+      firstName,
+      lastName,
+      email,
+      password: hashedPassword,
+      contactNumber,
+      accountType,
+      additionalDetails: profileDetails._id,
+      image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`,
+    });
+
+    // response return kar do
+    return res.status(200).json({
+      success: true,
+      message: "Successfully User SignUp",
+      user,
+    });
+  } catch (err) {
+    console.log("Error Fetch", err);
+    return res.status(500).json({
+      success: false,
+      message: "Something issue while user signing account, please try again",
+    });
+  }
+};
+
+//Login
+
+//Change Password
