@@ -105,6 +105,15 @@ exports.signUp = async (req, res) => {
       });
     }
 
+    // Validate email format using regex
+    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid email format",
+      });
+    }
+
     //2 Password Match Kra Lo
     if (password !== confirmPassword) {
       return res.status(400).json({
@@ -116,7 +125,6 @@ exports.signUp = async (req, res) => {
 
     //Check user already registered
     const existingUser = await User.findOne({ email });
-
     if (existingUser) {
       return res.status(400).json({
         success: false,
@@ -196,6 +204,15 @@ exports.login = async (req, res) => {
       });
     }
 
+    // Validate email format using regex
+    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid email format",
+      });
+    }
+
     //Ensure user already registered if not registered then return response
     const user = await User.findOne({ email });
     if (!user) {
@@ -238,8 +255,8 @@ exports.login = async (req, res) => {
   } catch (err) {
     console.log(err);
     return res.status(500).json({
-        success : false,
-        message : "Login Failure, please try again",
+      success: false,
+      message: "Login Failure, please try again",
     });
   }
 };
@@ -262,7 +279,8 @@ exports.changePassword = async (req, res) => {
     if (newPassword !== confirmPassword) {
       return res.status(400).json({
         success: false,
-        message: "New password and confirm password do not match, please try again",
+        message:
+          "New password and confirm password do not match, please try again",
       });
     }
 
@@ -286,19 +304,23 @@ exports.changePassword = async (req, res) => {
     await user.save();
 
     // Optionally, send a confirmation email to the user (e.g., via mailSender)
-    mailSender(user.email, "Password Changed", "Your password has been successfully updated.");
+    mailSender(
+      user.email,
+      "Password Changed",
+      "Your password has been successfully updated."
+    );
 
     // Return response
     return res.status(200).json({
       success: true,
       message: "Password successfully changed",
     });
-
   } catch (err) {
     console.error("Error while changing password: ", err);
     return res.status(500).json({
       success: false,
-      message: "An error occurred while changing the password, please try again",
+      message:
+        "An error occurred while changing the password, please try again",
     });
   }
 };

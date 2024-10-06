@@ -37,6 +37,12 @@ const userSchema = new mongoose.Schema({
       ref: "Courses",
     },
   ],
+  token: {
+    type: String,
+  },
+  resetPasswordExpires: {
+    type: Date,
+  },
   image: {
     type: String,
     required: true,
@@ -48,6 +54,5 @@ const userSchema = new mongoose.Schema({
     },
   ],
 });
-
 
 module.exports = mongoose.model("User", userSchema);
