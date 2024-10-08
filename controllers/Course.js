@@ -1,5 +1,5 @@
 const Course = require("../models/Course");
-const Tag = require("../models/Tag");
+const Category = require("../models/Category");
 const User = require("../models/User");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
 
@@ -39,12 +39,12 @@ exports.createCourse = async (req, res) => {
     }
 
     //check given tag is valid or not
-    const tagDetails = await Tag.findById(tag);
+    const categoryDetails = await Category.findById(tag);
 
-    if (!tagDetails) {
+    if (!categoryDetails) {
       return res.status(404).json({
         success: false,
-        message: "Tag details not found",
+        message: "Category details not found",
       });
     }
 
@@ -67,7 +67,7 @@ exports.createCourse = async (req, res) => {
       whatYouWillLearn,
       price,
       thumbnail: thumbnailImage.secure_url,
-      tags: tagDetails._id,
+      tags: categoryDetails._id,
     });
 
     //add the new course entry in user schema
@@ -82,9 +82,9 @@ exports.createCourse = async (req, res) => {
     );
 
     //Update the Tag Schema
-    await Tag.findByIdAndUpdate(
+    await Category.findByIdAndUpdate(
       {
-        _id: tagDetails._id,
+        _id: categoryDetails._id,
       },
       {
         $push: {
