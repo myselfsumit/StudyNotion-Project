@@ -76,23 +76,38 @@ exports.updateSection = async (req, res) => {
 
 //deleted section
 exports.deleteSection = async (req, res) => {
-    try 
-    {
-        //data fetching -> assuming that we are sending ID in params
-        const sectionId = req.params; 
-        //delete id correspond data
+    try {
+        // Fetch sectionId from params
+        const sectionId = req.params.sectionId;
+
+        // Check if section exists
+        const section = await Section.findById(sectionId);
+        if (!section) {
+            return res.status(404).json({
+                success: false,
+                message: "Section not found",
+            });
+        }
+
+        // Delete section
         await Section.findByIdAndDelete(sectionId);
-        //return response
+
+        // Remove the section reference from Course schema (not delete the course itself)
+        await Course.updateMany(
+            { courseContent: sectionId },
+            { $pull: { courseContent: sectionId } }
+        );
+
+        // Return success response
         return res.status(200).json({
-            success : true,
-            message : "Section deleted successfully",
+            success: true,
+            message: "Section deleted successfully",
+        });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({
+            success: false,
+            message: "Unable to delete section, please try again",
         });
     }
-    catch(err)
-    {
-        return res.status(400).json({
-            success : false,
-            message : "Unable to delete section, please try again",
-        });
-    }
-}
+};
