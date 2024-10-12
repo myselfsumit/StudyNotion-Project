@@ -1,7 +1,7 @@
 const Course = require("../models/Course");
 const Category = require("../models/Category");
 const User = require("../models/User");
-const { uploadImageToCloudinary } = require("../utils/imageUploader");
+const { cloudinaryUpload } = require("../utils/cloudinaryUploader");
 
 //Create Course API
 exports.createCourse = async (req, res) => {
@@ -49,7 +49,7 @@ exports.createCourse = async (req, res) => {
     }
 
     //Upload image to cloudinary
-    const thumbnailImage = await uploadImageToCloudinary(
+    const thumbnailImage = await cloudinaryUpload(
       thumbnail,
       process.env.FOLDER_NAME
     ).catch((error) => {
