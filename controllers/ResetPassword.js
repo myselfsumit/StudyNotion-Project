@@ -20,11 +20,22 @@ exports.resetPasswordToken = async (req, res) => {
 
     // Generate a secure token
     const token = crypto.randomUUID();
-    
+
     // Set token expiry (1 hour from now)
-    const resetPasswordExpires = Date.now() + 60 * 60 * 1000;  // 1 hour
+    const resetPasswordExpires = Date.now() + 60 * 60 * 1000; // 1 hour
+
+    //2nd Approach and this is optimal approach to write the expire time
+    //Step 1 :- Install dayjs
+    //Step 2 :- 
+    //const dayjs = require("dayjs");
+    //const resetPasswordExpires = dayjs().add(1, "hour").valueOf()
+    //---->>>>> About the code <<<<------
+    // dayjs() creates a new date object for the current time.
+    // .add(1, 'hour') adds 1 hour to the current time.
+    // .valueOf() returns the timestamp in milliseconds.
 
     // Update the user with the reset token and expiry time
+    //Yaha user ke adar token aur resetPsdExp daal rhe hai kyuki hume baad me paasword ko update krne ke lie user ki koi details honi chahie that's why we do this
     await User.findOneAndUpdate(
       { email: email },
       {
@@ -46,7 +57,8 @@ exports.resetPasswordToken = async (req, res) => {
     // Return success response
     return res.status(200).json({
       success: true,
-      message: "Email sent successfully, please check your inbox to reset the password",
+      message:
+        "Email sent successfully, please check your inbox to reset the password",
     });
   } catch (err) {
     console.error("Error in resetPasswordToken: ", err);
@@ -95,8 +107,8 @@ exports.resetPassword = async (req, res) => {
 
     // Update the user's password in the database
     user.password = hashedPassword;
-    user.token = undefined;  // Clear the reset token
-    user.resetPasswordExpires = undefined;  // Clear the token expiry time
+    user.token = undefined; // Clear the reset token
+    user.resetPasswordExpires = undefined; // Clear the token expiry time
     await user.save();
 
     // Send a confirmation email

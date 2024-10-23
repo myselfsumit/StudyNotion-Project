@@ -18,7 +18,7 @@ exports.updateProfile = async (req, res) => {
     }
 
     //Contact Number is valid only 10 digits
-    if (contactNumber.length() === 10) {
+    if (contactNumber.length !== 10 || !/^\d{10}$/.test(contactNumber)) {
       return res.status(400).json({
         success: false,
         message: "Invalid Contact Number",
@@ -26,7 +26,7 @@ exports.updateProfile = async (req, res) => {
     }
 
     // find profile
-    const userDetails = await User.findById({ id });
+    const userDetails = await User.findById(id);
     const profileId = userDetails.additionalDetails;
     const profileDetails = await Profile.findById({ profileId });
 
@@ -121,3 +121,6 @@ const getAllUserDetails = async (req, res) => {
     });
   }
 };
+
+
+
