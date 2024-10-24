@@ -26,19 +26,19 @@ const createSubSection = async (req, res) => {
     );
 
     // Create a new SubSection
-    const subSectionDetails = await SubSection.create({
-      title,
-      timeDuration,
-      description,
+    const SubSectionDetails = await SubSection.create({
+      title: title,
+      timeDuration: `${uploadDetails.duration}`,
+      description: description,
       videoUrl: uploadDetails.secure_url,
     });
 
     // Update the Section by adding the new SubSection ID
     const updatedSection = await Section.findByIdAndUpdate(
       sectionId,
-      { $push: { SubSection: subSectionDetails._id } },
+      { $push: { SubSection: SubSectionDetails._id } },
       { new: true }
-    ).populate("SubSection"); // Populate SubSection details
+    ).populate("subSection"); // Populate SubSection details
 
     // Log the updated section for debugging
     console.log("Updated Section:", updatedSection);
@@ -62,64 +62,46 @@ const createSubSection = async (req, res) => {
 };
 
 // Update SubSection
-exports.updatedSubSection = async (req, res) => {
+exports.updateSubSection = async (req, res) => {
   try {
-    // Fetch the data from request body
-    const { subSectionId, title, timeDuration, description } = req.body;
-    // Fetch video file if any
-    const video = req.files ? req.files.videoFile : null;
+    const { sectionId, title, description } = req.body;
+    const subSection = await SubSection.findById(sectionId);
 
-    // Validation
-    if (!title || !timeDuration || !description) {
-      return res.status(400).json({
+    if (!subSection) {
+      return res.status(404).json({
         success: false,
-        message: "title, timeDuration, and description are required",
+        message: "SubSection not found",
       });
     }
 
-    let videoUrl = null;
+    if (title !== undefined) {
+      subSection.title = title;
+    }
 
-    // If video file exists, upload to Cloudinary
-    if (video) {
-      const uploadDetails = await cloudinaryUpload(
+    if (description !== undefined) {
+      subSection.description = description;
+    }
+    if (req.files && req.files.video !== undefined) {
+      const video = req.files.video;
+      const uploadDetails = await uploadImageToCloudinary(
         video,
         process.env.FOLDER_NAME
       );
-      videoUrl = uploadDetails.secure_url;
+      subSection.videoUrl = uploadDetails.secure_url;
+      subSection.timeDuration = `${uploadDetails.duration}`;
     }
 
-    // Update the SubSection
-    const updateData = {
-      title,
-      timeDuration,
-      description,
-    };
+    await subSection.save();
 
-    // If a new video URL was generated, add it to the update data
-    if (videoUrl) {
-      updateData.videoUrl = videoUrl;
-    }
-
-    const updatedSubSection = await SubSection.findByIdAndUpdate(
-      subSectionId,
-      { $set: updateData }, // Use $set to update fields
-      { new: true }
-    );
-
-    // Return response
-    return res.status(200).json({
+    return res.json({
       success: true,
-      message: "Sub-Section updated successfully",
-      updatedSubSection,
+      message: "Section updated successfully",
     });
-  } catch (err) {
-    // Log the error for easier debugging
-    console.error("Error in updating sub-section:", err);
-
+  } catch (error) {
+    console.error(error);
     return res.status(500).json({
       success: false,
-      message: "Internal Server Error",
-      error: err.message,
+      message: "An error occurred while updating the section",
     });
   }
 };
