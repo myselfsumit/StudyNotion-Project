@@ -37,20 +37,60 @@ exports.createCategory = async (req, res) => {
 
 //Get All Tags Handler
 exports.showAllCategory = async (req, req) => {
-    try{
-        //Find the tags
-        const allCategories = await Tag.find({}, {name : true, description : true});
-        //Return the response
-        return res.status(200).json({
-            success : true,
-            message : "All Categories returned successfully",
-            allCategories,
-        });
+  try {
+    //Find the tags
+    const allCategories = await Tag.find({}, { name: true, description: true });
+    //Return the response
+    return res.status(200).json({
+      success: true,
+      message: "All Categories returned successfully",
+      allCategories,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
+//Category Page Details
+exports.categoryPageDetails = async (req, res) => {
+  try {
+    // get categoryId
+    const categoryId = req.body.categoryId;
+    //get courses for specified categoryId
+    const selectedCategory = await Category.findById(categoryId)
+      .populate("courses")
+      .exec();
+    //validation
+    if (!selectedCategory) {
+      return res.status(404).json({
+        success: false,
+        message: "Data Not Found",
+      });
     }
-    catch(err){
-        return res.status(500).json({
-            success : false,
-            message : err.message,
-        });
-    }
-}
+    //get courses for different categories
+    const differentCategories = await Category.findById({
+      _id: { $ne: categoryId },
+    })
+      .populate("courses")
+      .exec();
+    //get top selling courses
+    //HW
+    //return response
+    return res.status(200).json({
+      success: true,
+      data: {
+        selectedCategory,
+        differentCategories,
+      },
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};

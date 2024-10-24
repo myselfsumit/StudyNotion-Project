@@ -121,20 +121,64 @@ exports.showAllCourses = async (req, res) => {
         studentEnrolled: true,
       }
     )
-    .populate("instructor")
-    .exec();
+      .populate("instructor")
+      .exec();
 
     return res.status(200).json({
-        success : true,
-        message : "Data for all courses fetched successfully",
-        data : allCourses,
-    })
+      success: true,
+      message: "Data for all courses fetched successfully",
+      data: allCourses,
+    });
   } catch (err) {
     console.log(err);
     return res.status(500).json({
       success: false,
       message: "Cannot fetch course data",
       error: err.message,
+    });
+  }
+};
+
+exports.getCourseDetails = async (req, res) => {
+  try {
+    //get the course id
+    const courseId = req.body;
+    //find the course details
+    const courseDetails = await Course.find({ _id: courseId })
+      .populate({
+        path: "instructor",
+        populate: {
+          path: "additionalDetails",
+        },
+      })
+      .populate("category")
+      .populate("ratingAndreviews")
+      .populate({
+        path: "courseContent",
+        populate: {
+          path: "subSection",
+        },
+      })
+      .exec();
+
+    //validation
+    if (!courseDetails) {
+      return res.status(400).json({
+        success: false,
+        message: `Could not find the course with ${courseId}`,
+      });
+    }
+
+    //return response
+    return res.status(200).json({
+      success: true,
+      message: "Course Details Fetched Successfully",
+      data: courseDetails,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: err.message,
     });
   }
 };
