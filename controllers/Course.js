@@ -23,24 +23,23 @@ exports.createCourse = async (req, res) => {
 		// Get thumbnail image from request files
 		const thumbnail = req.files.thumbnailImage;
 
-		// Check if any of the required fields are missing
-		if (
-			!courseName ||
-			!courseDescription ||
-			!whatYouWillLearn ||
-			!price ||
-			!tag ||
-			!thumbnail ||
-			!category
-		) {
-			return res.status(400).json({
-				success: false,
-				message: "All Fields are Mandatory",
-			});
-		}
-		if (!status || status === undefined) {
-			status = "Draft";
-		}
+		// // Check if any of the required fields are missing
+		// if (
+		// 	!courseName ||
+		// 	!courseDescription ||
+		// 	!whatYouWillLearn ||
+		// 	!price ||
+		// 	!tag ||
+		// 	!category
+		// ) {
+		// 	return res.status(400).json({
+		// 		success: false,
+		// 		message: "All Fields are Mandatory",
+		// 	});
+		// }
+		// if (!status || status === undefined) {
+		// 	status = "Draft";
+		// }
 		// Check if the user is an instructor
 		const instructorDetails = await User.findById(userId, {
 			accountType: "Instructor",
