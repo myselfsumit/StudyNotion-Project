@@ -4,7 +4,9 @@ import { FaArrowRight } from "react-icons/fa6";
 import HighlightText from "../components/core/HomePage/HighlightText";
 import CTAButton from "../components/core/HomePage/Button";
 import Banner from "../assets/Images/banner.mp4";
-import CodeBlocks from "../components/core/HomePage/CodeBlocks"
+import CodeBlocks from "../components/core/HomePage/CodeBlocks";
+import LearningLanguageSection from "../components/core/HomePage/LearningLanguageSection";
+import TimelineSection from "../components/core/HomePage/TimelineSection";
 
 const Home = () => {
   return (
@@ -56,77 +58,113 @@ const Home = () => {
 
         {/* Code Section 1 */}
         <div>
-            <CodeBlocks
-                position={"lg:flex-row"}
-                heading={
-                    <div className="text-4xl font-semibold">
-                        Unlock your
-                        <HighlightText text={"coding potential"}/>
-                        with our online courses
-                    </div>
-                }
-                subheading={"Our courses are designed and taught by industry experts who have years of experience in coding and are passionate about sharing their knowledge with you."}
-                ctabtn1={
-                    {
-                        btnText : "try it yourself",
-                        linkto : "/signup",
-                        active : true,
-                    }
-                }
-
-                ctabtn2={
-                    {
-                        btnText : "learn more",
-                        linkto : "/login",
-                        active : false,
-                    }
-                }
-
-                codeblock={`<<!DOCTYPE html>\n<html>\nhead><title>Example</title><linkrel="stylesheet"href="styles.css">\n/head>\n`}
-                codeColor={"text-yellow-25"}
-            />
+          <CodeBlocks
+            position={"lg:flex-row"}
+            heading={
+              <div className="text-4xl font-semibold">
+                Unlock your
+                <HighlightText text={"coding potential"} />
+                with our online courses
+              </div>
+            }
+            subheading={
+              "Our courses are designed and taught by industry experts who have years of experience in coding and are passionate about sharing their knowledge with you."
+            }
+            ctabtn1={{
+              btnText: "try it yourself",
+              linkto: "/signup",
+              active: true,
+            }}
+            ctabtn2={{
+              btnText: "learn more",
+              linkto: "/login",
+              active: false,
+            }}
+            codeblock={`<<!DOCTYPE html>\n<html>\nhead><title>Example</title><linkrel="stylesheet"href="styles.css">\n/head>\n`}
+            codeColor={"text-yellow-25"}
+          />
         </div>
 
         {/* Code Section 1 */}
         <div>
-            <CodeBlocks 
-                position={"lg:flex-row-reverse"}
-                heading={
-                    <div className='text-4xl font-semibold'>
-                        Unlock Your
-                        <HighlightText text={"coding potential"}/>
-                        with our online courses
-                    </div>
-                }
-                subheading = {
-                    "Our courses are designed and taught by industry experts who have years of experience in coding and are passionate about sharing their knowledge with you."
-                }
-                ctabtn1={
-                    {
-                        btnText: "try it yourself",
-                        linkto: "/signup",
-                        active: true,
-                    }
-                }
-                ctabtn2={
-                    {
-                        btnText: "learn more",
-                        linkto: "/login",
-                        active: false,
-                    }
-                }
-
-                codeblock={`<<!DOCTYPE html>\n<html>\nhead><title>Example</title><linkrel="stylesheet"href="styles.css">\n/head>\n`}
-                codeColor={"text-yellow-25"}
-            />
+          <CodeBlocks
+            position={"lg:flex-row-reverse"}
+            heading={
+              <div className="text-4xl font-semibold">
+                Unlock Your
+                <HighlightText text={"coding potential"} />
+                with our online courses
+              </div>
+            }
+            subheading={
+              "Our courses are designed and taught by industry experts who have years of experience in coding and are passionate about sharing their knowledge with you."
+            }
+            ctabtn1={{
+              btnText: "try it yourself",
+              linkto: "/signup",
+              active: true,
+            }}
+            ctabtn2={{
+              btnText: "learn more",
+              linkto: "/login",
+              active: false,
+            }}
+            codeblock={`<<!DOCTYPE html>\n<html>\nhead><title>Example</title><linkrel="stylesheet"href="styles.css">\n/head>\n`}
+            codeColor={"text-yellow-25"}
+          />
         </div>
-        
-
-
-
       </div>
 
       {/* Section 2 */}
+      <div className="bg-pure-greys-5 text-richblack-700">
+        {/* First Part Button */}
+        <div className="homepage_bg h-[310px]">
+          <div className="w-11/12 max-w-maxContent flex flex-col items-center gap-5 mx-auto justify-between">
+            <div className="h-[150px]"></div>
+            <div className="flex flex-row gap-7 text-white">
+              {/* Buttons */}
+              <CTAButton active={true} linkto={"/"}>
+                <div className="flex items-center gap-3">
+                  Expore Full Catalog
+                  <FaArrowRight />
+                </div>
+              </CTAButton>
+              <CTAButton active={false} linkto={"/"}>
+                Learn More
+              </CTAButton>
+            </div>
+          </div>
+        </div>
+
+        {/* Second Part */}
+        <div className="w-11/12 max-w-maxContent flex flex-col gap-5 mx-auto justify-between ">
+          <div className="flex gap-5 mb-10 mt-[95px]">
+            <div className="text-4xl font-semibold w-[45%]">
+              Get the skills you need for a{" "}
+              <HighlightText text={"job that is in demand."} />
+            </div>
+
+            <div className="flex flex-col gap-10 w-[40%] items-start">
+              <div className="text-richblack-400 text-[16px]">
+                The modern StudyNotion is the dictates its own terms. Today, to
+                be a competitive specialist requires more than professional
+                skills.
+              </div>
+              <CTAButton active={true} linkto={"/signup"}>
+                Learn More
+              </CTAButton>
+            </div>
+          </div>
+
+          <TimelineSection />
+
+{/* <LearningLanguageSection /> */}
+
+          
+        </div>
+
+
+      </div>
 
       {/* Section 3 */}
 
