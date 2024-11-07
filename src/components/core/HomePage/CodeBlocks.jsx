@@ -1,6 +1,6 @@
-import React, { Children } from "react";
+// import React, { Children } from "react";
 import CTAButton from "../HomePage/Button";
-import HighlightText from "./HighlightText";
+// import HighlightText from "./HighlightText";
 import { FaArrowRight } from "react-icons/fa6";
 import { TypeAnimation } from "react-type-animation";
 
