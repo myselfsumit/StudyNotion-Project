@@ -1,10 +1,11 @@
+// Isme hum kewal backend ke Controller ke functions ko call krne ka code kr rhe hote hai 
 import { toast } from "react-hot-toast"
-
 import { setLoading, setToken } from "../../slices/authSlice"
 import { resetCart } from "../../slices/cartSlice"
 import { setUser } from "../../slices/profileSlice"
 import { apiConnector } from "../apiconnector"
 import { endpoints } from "../apis"
+import { Controller } from "swiper/modules"
 
 const {
   SENDOTP_API,
@@ -119,7 +120,7 @@ export function login(email, password, navigate) {
 export function getPasswordResetToken(email, setEmailSent) {
   return async (dispatch) => {
     const toastId = toast.loading("Loading...")
-    dispatch(setLoading(true))
+    dispatch(setLoading(true));
     try {
       const response = await apiConnector("POST", RESETPASSTOKEN_API, {
         email,
@@ -132,7 +133,7 @@ export function getPasswordResetToken(email, setEmailSent) {
       }
 
       toast.success("Reset Email Sent")
-      setEmailSent(true)
+      setEmailSent(true);
     } catch (error) {
       console.log("RESETPASSTOKEN ERROR............", error)
       toast.error("Failed To Send Reset Email")
