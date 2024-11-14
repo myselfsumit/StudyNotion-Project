@@ -10,13 +10,13 @@ const Stats = [
 const StatsComponent = () => {
   return (
     <section>
-      <div>
-        <div className="flex gap-x-5">
+      <div className="bg-richblack-800 py-20">
+        <div className="w-11/12 max-w-maxContent mx-auto flex gap-x-5 justify-between items-center">
           {Stats.map((data, index) => {
             return (
-              <div key={index}>
-                <h1>{data.count}</h1>
-                <h2>{data.label}</h2>
+              <div key={index} className="flex flex-col justify-center items-center gap-y-2">
+                <h1 className="text-richblack-25">{data.count}</h1>
+                <h2 className="text-richblack-200">{data.label}</h2>
               </div>
             );
           })}

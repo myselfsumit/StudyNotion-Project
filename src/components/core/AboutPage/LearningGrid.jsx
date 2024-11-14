@@ -22,31 +22,31 @@ const LearningGridArray = [
     order: 2,
     heading: "Our Learning Methods",
     description:
-      "Studynotion partners with more than 275+ leading universities and companies to bring",
+      "The learning process uses the namely online and offline.",
   },
   {
     order: 3,
     heading: "Certification",
     description:
-      "Studynotion partners with more than 275+ leading universities and companies to bring",
+      "You will get a certificate that can be used as a certification during job hunting.",
   },
   {
     order: 4,
     heading: `Rating "Auto-grading"`,
     description:
-      "Studynotion partners with more than 275+ leading universities and companies to bring",
+      "You will immediately get feedback during the learning process without having to wait for an answer or response from the mentor.",
   },
   {
     order: 5,
     heading: "Ready to Work",
     description:
-      "Studynotion partners with more than 275+ leading universities and companies to bring",
+      "Connected with over 150+ hiring partners, you will have the opportunity to find a job after graduating from our program.",
   },
 ];
 
 const LearningGrid = () => {
   return (
-    <div className="grid  grid-col-1 lg:grid-cols-4 mb-10 p-5 lg:w-fit">
+    <div className="grid grid-col-1 lg:grid-cols-4 mb-10 p-5 lg:w-fit">
       {LearningGridArray.map((card, index) => {
         return (
           <div
@@ -62,12 +62,16 @@ const LearningGrid = () => {
                 `}
           >
             {card.order < 0 ? (
-              <div className="lg:w-[90%] flex flex-col pb-5 gap-3">
-                <div className="text-4xl font-semibold">
+              <div className="lg:w-[90%] flex flex-col pb-5 gap-3 ">
+                <div className="text-4xl font-semibold text-richblack-25">
                   {card.heading}
-                  <HighlightText text={card.highlightText} />
+                  <HighlightText
+                    text={card.highlightText}
+                  />
                 </div>
-                <p className="font-medium">{card.description}</p>
+                <p className="font-medium text-richblack-300 leading-6">
+                  {card.description}
+                </p>
                 <div className="w-fit mt-4">
                   <CTAButton active={true} linkto={card.BtnLink}>
                     {card.BtnText}
@@ -75,9 +79,9 @@ const LearningGrid = () => {
                 </div>
               </div>
             ) : (
-              <div className="flex flex-col gap-8 p-7">
-                <h1 className="text-richblack-5 text-lg">{card.heading}</h1>
-                <p className="text-richblack-300 font-medium">
+              <div className="mx-auto flex flex-col gap-8 p-2 text-base">
+                <h1 className="text-richblack-25 font-semibold text-lg">{card.heading}</h1>
+                <p className="text-richblack-300 font-small font-inter leading-6">
                   {card.description}
                 </p>
               </div>

@@ -40,16 +40,16 @@ function UpdatePassword() {
         <div className="spinner"></div>
       ) : (
         <div className="max-w-[500px] p-4 lg:p-8">
-          <h1 className="text-[1.875rem] font-semibold leading-[2.375rem] text-richblack-5">
+          <h1 className="text-[1.875rem] font-semibold leading-[2.375rem] text-richblack-25">
             Choose new password
           </h1>
-          <p className="my-4 text-[1.125rem] leading-[1.625rem] text-richblack-100">
-            Almost done. Enter your new password and youre all set.
+          <p className="my-2 mb-4 text-[1.1rem] leading-[1.620rem] text-richblack-300">
+            Almost done. Enter your new password and you're all set.
           </p>
           <form onSubmit={handleOnSubmit}>
             <label className="relative">
-              <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
-                New Password <sup className="text-pink-200">*</sup>
+              <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-100">
+                New password <sup className="text-pink-200">*</sup>
               </p>
               <input
                 required
@@ -57,8 +57,8 @@ function UpdatePassword() {
                 name="password"
                 value={password}
                 onChange={handleOnChange}
-                placeholder="Enter Password"
-                className="form-style w-full !pr-10"
+                placeholder="Enter password"
+                className="w-full rounded-[0.5rem] bg-richblack-800 p-[12px] text-richblack-5"
               />
               <span
                 onClick={() => setShowPassword((prev) => !prev)}
@@ -71,9 +71,9 @@ function UpdatePassword() {
                 )}
               </span>
             </label>
-            <label className="relative mt-3 block">
-              <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
-                Confirm New Password <sup className="text-pink-200">*</sup>
+            <label className="relative mt-5 block">
+              <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-100">
+                Confirm new password <sup className="text-pink-200">*</sup>
               </p>
               <input
                 required
@@ -81,8 +81,8 @@ function UpdatePassword() {
                 name="confirmPassword"
                 value={confirmPassword}
                 onChange={handleOnChange}
-                placeholder="Confirm Password"
-                className="form-style w-full !pr-10"
+                placeholder="Enter confirm password"
+                className="w-full rounded-[0.5rem] bg-richblack-800 p-[12px] text-richblack-5"
               />
               <span
                 onClick={() => setShowConfirmPassword((prev) => !prev)}
@@ -105,8 +105,8 @@ function UpdatePassword() {
           </form>
           <div className="mt-6 flex items-center justify-between">
             <Link to="/login">
-              <p className="flex items-center gap-x-2 text-richblack-5">
-                <BiArrowBack /> Back To Login
+              <p className="flex items-center gap-x-2 text-richblack-25">
+                <BiArrowBack /> Back to login
               </p>
             </Link>
           </div>

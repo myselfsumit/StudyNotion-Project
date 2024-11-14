@@ -84,13 +84,13 @@ function VerifyEmail() {
               type="submit"
               className="w-full bg-yellow-50 py-[12px] px-[12px] rounded-[8px] mt-6 font-medium text-richblack-900"
             >
-              Verify Email
+              Verify email
             </button>
           </form>
           <div className="mt-6 flex items-center justify-between">
             <Link to="/signup">
-              <p className="text-richblack-5 flex items-center gap-x-2">
-                <BiArrowBack /> Back To Signup
+              <p className="text-richblack-25 flex items-center gap-x-2">
+                <BiArrowBack /> Back to gignup
               </p>
             </Link>
             <button
