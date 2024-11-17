@@ -12,10 +12,10 @@ import Footer from "../components/common/Footer";
 
 const About = () => {
   return (
-    <div className="text-white">
+    <div>
       {/* section 1 */}
       <section className="bg-richblack-800">
-        <div className="relative mx-auto flex flex-col w-11/12 max-w-maxContent items-center text-white justify-between">
+        <div className="relative mx-auto flex flex-col w-11/12 max-w-maxContent items-center text-richblack-25 justify-between">
           <header className="text-center text-3xl font-semibold mt-28">
             Driving Innovation in Online Education for a
             <br />
