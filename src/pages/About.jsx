@@ -143,7 +143,7 @@ const About = () => {
         <ContactFormSection />
       </section>
 
-      <section className="mx-auto mt-16 w-11/12 max-w-maxContent flex flex-col justify-center items-center bg-richblack-900">
+      <section className="mx-auto mt-16 w-11/12 max-w-maxContent flex flex-col justify-center items-center text-richblack-25">
         <div className="text-3xl mb-24">
           Reviews from other learners
           {/* <ReviewSlider /> */}
