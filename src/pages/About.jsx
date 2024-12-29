@@ -28,7 +28,7 @@ const About = () => {
             </p>
           </header>
           <div className="flex gap-x-3 mx-auto translate-y-11">
-            <img src={BannerImage1} className="rounded-lg shadow-lg" />
+            <img src={BannerImage1} alt="Banner1" className="rounded-lg shadow-lg" />
             <img src={BannerImage2} className="rounded-lg shadow-lg" />
             <img src={BannerImage3} className="rounded-lg shadow-lg" />
           </div>
