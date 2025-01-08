@@ -7,6 +7,7 @@ const { uploadImageToCloudinary } = require("../utils/imageUploader")
 const CourseProgress = require("../models/CourseProgress")
 const { convertSecondsToDuration } = require("../utils/secToDuration")
 
+
 // Function to create a new course
 exports.createCourse = async (req, res) => {
   try {
@@ -366,6 +367,7 @@ exports.getFullCourseDetails = async (req, res) => {
 
 // Get a list of Course for a given Instructor
 exports.getInstructorCourses = async (req, res) => {
+  console.log("Get Instruction Course Try Me Hi Nhi Gya --");
   try {
     // Ensure user is authenticated and instructor ID is available
     if (!req.user || !req.user.id) {
@@ -390,6 +392,8 @@ exports.getInstructorCourses = async (req, res) => {
         message: "No courses found for this instructor",
       });
     }
+
+    console.log("Instructor Course ---- ", instructorCourses);
 
     // Respond with the instructor's courses
     res.status(200).json({
