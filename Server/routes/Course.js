@@ -57,7 +57,7 @@ const {
 
 // Courses can Only be Created by Instructors
 router.post("/createCourse", auth, isInstructor, createCourse);
-//Add a Section to a Course
+// Add a Section to a Course
 router.post("/addSection", auth, isInstructor, createSection);
 // Update a Section
 router.post("/updateSection", auth, isInstructor, updateSection);
@@ -71,9 +71,9 @@ router.post("/deleteSubSection", auth, isInstructor, deleteSubSection);
 router.post("/addSubSection", auth, isInstructor, createSubSection);
 // Get all Registered Courses
 router.get("/getAllCourses", getAllCourses);
-// Get Details for a Specific Courses
+// Get Details for a Specific Course
 router.post("/getCourseDetails", getCourseDetails);
-// Get Details for a Specific Courses
+// Get Full Details for a Specific Course (Requires Auth)
 router.post("/getFullCourseDetails", auth, getFullCourseDetails);
 // Edit Course routes
 router.post("/editCourse", auth, isInstructor, editCourse);
@@ -86,7 +86,6 @@ router.delete("/deleteCourse", deleteCourse);
 //                                      Category routes (Only by Admin)
 // ********************************************************************************************************
 // Category can Only be Created by Admin
-// TODO: Put IsAdmin Middleware here
 router.post("/createCategory", auth, isAdmin, createCategory);
 router.get("/showAllCategories", showAllCategories);
 router.post("/getCategoryPageDetails", categoryPageDetails);

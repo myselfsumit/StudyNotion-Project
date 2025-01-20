@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { HomePageExplore } from "../../../data/homepage-explore";
-import HighlightText from "./HighlightText";
 import CourseCard from "./CourseCard";
-
+import HighlightText from "./HighlightText";
 
 const tabsName = [
   "Free",
   "New to coding",
   "Most popular",
-  "Skill paths",
+  "Skills paths",
   "Career paths",
 ];
 
@@ -57,7 +56,6 @@ const ExploreMore = () => {
           );
         })}
       </div>
-
       <div className="hidden lg:block lg:h-[200px]"></div>
 
       {/* Cards Group */}
@@ -73,7 +71,6 @@ const ExploreMore = () => {
           );
         })}
       </div>
-
     </div>
   );
 };

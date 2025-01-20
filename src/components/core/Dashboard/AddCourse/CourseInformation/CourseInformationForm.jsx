@@ -186,7 +186,7 @@ export default function CourseInformationForm() {
           id="courseShortDesc"
           placeholder="Enter Description"
           {...register("courseShortDesc", { required: true })}
-          className="form-style text-richblack-500 resize-x-none min-h-[130px] w-full"
+          className="form-style resize-x-none min-h-[130px] w-full"
         />
         {errors.courseShortDesc && (
           <span className="ml-2 text-xs tracking-wide text-pink-200">
@@ -226,17 +226,17 @@ export default function CourseInformationForm() {
           Course Category <sup className="text-pink-200">*</sup>
         </label>
         <select
-          {...register("courseCategory", { required: false })}
+          {...register("courseCategory", { required: true })}
           defaultValue=""
           id="courseCategory"
           className="form-style w-full"
         >
-          <option value="" disabled className="text-richblack-400">
+          <option value="" disabled>
             Choose a Category
           </option>
           {!loading &&
             courseCategories?.map((category, indx) => (
-              <option key={indx} value={category?._id} className="text-richblack-400">
+              <option key={indx} value={category?._id}>
                 {category?.name}
               </option>
             ))}
@@ -265,7 +265,6 @@ export default function CourseInformationForm() {
         setValue={setValue}
         errors={errors}
         editData={editCourse ? course?.thumbnail : null}
-        required={false}
       />
       {/* Benefits of the course */}
       <div className="flex flex-col space-y-2">
@@ -276,7 +275,7 @@ export default function CourseInformationForm() {
           id="courseBenefits"
           placeholder="Enter benefits of the course"
           {...register("courseBenefits", { required: true })}
-          className="form-style text-richblack-400 resize-x-none min-h-[130px] w-full"
+          className="form-style resize-x-none min-h-[130px] w-full"
         />
         {errors.courseBenefits && (
           <span className="ml-2 text-xs tracking-wide text-pink-200">

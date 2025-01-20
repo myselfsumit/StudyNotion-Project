@@ -1,23 +1,30 @@
-const express = require("express")
-const router = express.Router()
-const { auth } = require("../middlewares/auth")
+const express = require("express");
+const router = express.Router();
+const { auth, isInstructor } = require("../middlewares/auth"); // Added isInstructor
 const {
   deleteAccount,
   updateProfile,
   getAllUserDetails,
   updateDisplayPicture,
   getEnrolledCourses,
-} = require("../controllers/Profile")
+  instructorDashboard, // Added instructorDashboard
+} = require("../controllers/Profile");
 
 // ********************************************************************************************************
 //                                      Profile routes
 // ********************************************************************************************************
-// Delet User Account
-router.delete("/deleteProfile", auth, deleteAccount)
-router.put("/updateProfile", auth, updateProfile)
-router.get("/getUserDetails", auth, getAllUserDetails)
-// Get Enrolled Courses
-router.get("/getEnrolledCourses", auth, getEnrolledCourses)
-router.put("/updateDisplayPicture", auth, updateDisplayPicture)
 
-module.exports = router
+// Delete User Account
+router.delete("/deleteProfile", auth, deleteAccount);
+// Update User Profile
+router.put("/updateProfile", auth, updateProfile);
+// Get User Details
+router.get("/getUserDetails", auth, getAllUserDetails);
+// Get Enrolled Courses
+router.get("/getEnrolledCourses", auth, getEnrolledCourses);
+// Update User Display Picture
+router.put("/updateDisplayPicture", auth, updateDisplayPicture);
+// Instructor Dashboard (Accessible by instructors only)
+router.get("/instructorDashboard", auth, isInstructor, instructorDashboard);
+
+module.exports = router;

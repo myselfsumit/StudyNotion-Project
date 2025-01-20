@@ -1,7 +1,7 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { Outlet } from 'react-router-dom';
-import Sidebar from '../components/core/Dashboard/Sidebar';
+import React from "react";
+import { useSelector } from "react-redux";
+import { Outlet } from "react-router-dom";
+import Sidebar from "../components/core/Dashboard/Sidebar";
 
 const Dashboard = () => {
   const { loading: authLoading } = useSelector((state) => state.auth);
@@ -9,12 +9,11 @@ const Dashboard = () => {
 
   if (profileLoading || authLoading) {
     return (
-      <div className="mt-10 text-white text-center">
-        Loading...
+      <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center">
+        <div className="spinner"></div>
       </div>
-    );
+    )
   }
-
   return (
     <div className="relative flex min-h-[calc(100vh-3.5rem)] bg-richblack-900 text-white">
       <Sidebar />
